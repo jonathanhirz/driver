@@ -9179,7 +9179,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: e39eda855f2ba45458ab5f9b7c457293, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.94
+      value: -3.37
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e39eda855f2ba45458ab5f9b7c457293, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9187,7 +9187,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e39eda855f2ba45458ab5f9b7c457293, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -30.12
+      value: -23.84
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e39eda855f2ba45458ab5f9b7c457293, type: 3}
       propertyPath: m_LocalRotation.x
@@ -10167,9 +10167,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2066711462}
   - component: {fileID: 2066711461}
-  - component: {fileID: 2066711460}
   - component: {fileID: 2066711459}
+  - component: {fileID: 2066711460}
   - component: {fileID: 2066711458}
+  - component: {fileID: 2066711463}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -10258,6 +10259,18 @@ Transform:
   m_Father: {fileID: 1576073131}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2066711463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2066711457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b6f01ab50b849b9a23bc030d555d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballHit: {fileID: 8300000, guid: e3521b7959c8b4862aa2cf5fff7c8f4a, type: 3}
 --- !u!4 &2068346523 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4774761045281938, guid: 15742d38487f947e696761ce0c280d44,
