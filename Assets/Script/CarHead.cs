@@ -19,20 +19,18 @@ public class CarHead : MonoBehaviour {
     private Vector3 rotationSmoothVelocity;
     
 	void Awake () {
-        transform.position = car.position;
-        
+        transform.position = car.position;   
 	}
 	
 	void LateUpdate () {
         transform.position = car.position;
 
+        // inverted up/down look axis setting
         int invertedInt = inverted ? 1 : -1;
-
         yaw -= Input.GetAxis("RightHorizontal") * rotateSpeed;
         pitch += Input.GetAxis("RightVertical") * rotateSpeed * invertedInt;
         pitch = Mathf.Clamp(pitch, pitchMinMax.x, pitchMinMax.y);
         currentRotation = Vector3.SmoothDamp(currentRotation, new Vector2(pitch, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
         transform.eulerAngles = currentRotation;
-
 	}
 }

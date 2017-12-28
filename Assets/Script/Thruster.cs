@@ -5,15 +5,17 @@ using System.Collections;
 
 public class Thruster : MonoBehaviour {
 
-    public float minThrusterStrength;
-    public float maxThrusterStrength;
-    public float thrusterDistance;
-    public Transform[] thrusters;
-    public LayerMask floatLayerMask;
+    [SerializeField]
+    private float thrusterStrength;
+    [SerializeField]
+    private float thrusterDistance;
+    [SerializeField]
+    private Transform[] thrusters;
+    [SerializeField]
+    private LayerMask floatLayerMask;
     
     private Rigidbody rb;
-    private float thrusterStrength;
-
+   
     void Awake() {
         rb = GetComponent<Rigidbody>();
     }
@@ -35,17 +37,7 @@ public class Thruster : MonoBehaviour {
 
                 // apply the force where the thruster is
                 rb.AddForceAtPosition(downwardForce, thruster.position);
-
-                Debug.DrawRay(thruster.position, thruster.up * -1, Color.red);
             }
-        }
-    }
-
-    void Update() {
-        if(Input.GetKey(KeyCode.F) || Input.GetButton("Flatten")) {
-            thrusterStrength = minThrusterStrength;
-        } else {
-            thrusterStrength = maxThrusterStrength;
         }
     }
 }

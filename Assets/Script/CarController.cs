@@ -3,18 +3,22 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour {
 
-    public float speed;
-    public float turnSpeed;
-    public float minTwistSpeed;
-    public float maxTwistSpeed;
-    public LayerMask flipLayerMask;
-    public Transform TwistThrusterL;
-    public Transform TwistThrusterR;
+    [SerializeField]
+    private float speed;
+    [SerializeField]
+    private float turnSpeed;
+    [SerializeField]
+    private float twistSpeed;
+    [SerializeField]
+    private LayerMask flipLayerMask;
+    [SerializeField]
+    private Transform TwistThrusterL;
+    [SerializeField]
+    private Transform TwistThrusterR;
 
     private Rigidbody rb;
     private float rotationVelocity;
     private float fixingRotation;
-    private float twistSpeed;
     private float desiredAngle;
     private float desiredAngleX;
     private float desiredAngleY;
@@ -39,7 +43,7 @@ public class CarController : MonoBehaviour {
         movementV = Input.GetAxis("Vertical");
 
         // check if we are touching the ground
-        if(Physics.Raycast(transform.position, -transform.up, 3f)) {
+        if(Physics.Raycast(transform.position, -transform.up, 2f)) {
             // we are on the ground. enable the accelerator and increase drag
             rb.drag = 1;
 
@@ -60,10 +64,6 @@ public class CarController : MonoBehaviour {
         } else {
             // we aren't on the ground, and don't want to just halt in mid-air. reduce drag
             rb.drag = 0;
-            // Vector3 adjustedRotation = transform.eulerAngles;
-            // adjustedRotation.x = Mathf.SmoothDampAngle(adjustedRotation.x, 0, ref fixingRotation, 0.5f);
-            // adjustedRotation.z = Mathf.SmoothDampAngle(adjustedRotation.z, 0, ref fixingRotation, 0.5f);
-            // transform.eulerAngles = adjustedRotation;
         }
 
         // input for twisting
@@ -86,32 +86,27 @@ public class CarController : MonoBehaviour {
 
         rb.AddForceAtPosition(-transform.up * twistLeftTrigger * twistSpeed, TwistThrusterL.position);
         rb.AddForceAtPosition(-transform.up * twistRightTrigger * twistSpeed, TwistThrusterR.position);
+    }
 
+    void LateUpdate() {
         // "fake" rotate the car when you are turning
         if(movement.x != 0 || movement.z != 0) {
-            // desiredAngleX = movementH;
-            // desiredAngleY = -movementV;
+            // use the movement vector3 calculated before to figure out car rotation
             desiredAngleX = movement.x;
             desiredAngleY = -movement.z;
         }
-
+        // figure out angle between movement, input, and camera forward
         desiredAngle = Mathf.Atan2(desiredAngleY, desiredAngleX) * Mathf.Rad2Deg + 90;
         Vector3 newRotation = transform.eulerAngles;
         newRotation.y = Mathf.SmoothDampAngle(newRotation.y, desiredAngle, ref rotationVelocity, turnSpeed);
         transform.eulerAngles = newRotation;
-    }
 
-    void Update() {
+        // debug reset key
         if(Input.GetKeyDown(KeyCode.R)) {
             transform.position = originalPosition;
             transform.rotation = originalRotation;
             rb.velocity = Vector3.zero;
             desiredAngle = 0;
-        }
-        if(Physics.Raycast(transform.position, transform.up, 1.0f, flipLayerMask)) {
-            twistSpeed = maxTwistSpeed;
-        } else {
-            twistSpeed = minTwistSpeed;
         }
     }
 }
